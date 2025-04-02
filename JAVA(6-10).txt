@@ -1,0 +1,382 @@
+JAVA
+SLIP 6=
+Q1=
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+public class UniqueSortedCollection {
+    public static void main(String[] args) {
+        Set<Integer> numbers = new TreeSet<>();
+        Scanner scanner = new Scanner(System.in);
+          System.out.print("Enter the number of elements: ");
+        int n = scanner.nextInt();
+        System.out.println("Enter " + n + " integers:");
+        for (int i = 0; i < n; i++) {
+            int num = scanner.nextInt();
+            numbers.add(num);  // TreeSet automatically handles duplicates and sorting
+        }
+        System.out.println("Sorted elements without duplicates: " + numbers);
+        System.out.print("Enter the element to search for: ");
+        int searchElement = scanner.nextInt();
+            if (numbers.contains(searchElement)) {
+            System.out.println(searchElement + " is present in the collection.");
+        } else {
+            System.out.println(searchElement + " is not present in the collection.");
+        }
+        scanner.close();
+    }
+}
+Q2=(1)
+import java.util.Scanner;
+class Employee {
+    int id;
+    String name;
+    double salary;
+    public Employee(int id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+    public double getSalary() {
+        return salary;
+    }
+    public String getName() {
+        return name;
+    }
+}
+public class EmployeeMaxSalary {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of employees: ");
+        int n = scanner.nextInt();
+        Employee[] employees = new Employee[n];
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter details for employee " + (i + 1) + ":");
+            System.out.print("Enter ID: ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+            System.out.print("Enter Name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter Salary: ");
+            double salary = scanner.nextDouble();
+            employees[i] = new Employee(id, name, salary);
+        }
+        Employee maxSalaryEmployee = employees[0];
+        for (int i = 1; i < n; i++) {
+            if (employees[i].getSalary() > maxSalaryEmployee.getSalary()) {
+                maxSalaryEmployee = employees[i];
+            }
+        }
+        System.out.println("The employee with the maximum salary is: " + maxSalaryEmployee.getName());
+         scanner.close();
+    }
+}
+*SLIP 7*
+Q1=
+import java.util.Hashtable;
+import java.util.Enumeration;
+public class EmployeeHashTable {
+    public static void main(String[] args) {
+        Hashtable<String, Double> employeeTable = new Hashtable<>();
+        employeeTable.put("Alice", 50000.0);
+        employeeTable.put("Bob", 60000.0);
+        employeeTable.put("Charlie", 55000.0);
+        employeeTable.put("David", 45000.0);
+        employeeTable.put("Eva", 70000.0);
+        System.out.println("Employee Name and Salary details:");
+        Enumeration<String> names = employeeTable.keys();
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            Double salary = employeeTable.get(name);
+            System.out.println("Name: " + name + ", Salary: " + salary);
+        }
+    }
+}
+Q2=(1)
+import java.util.Scanner;
+class Student {
+    int rollno;
+    String name;
+    double percentage;
+    public Student() {
+        this.rollno = 0;
+        this.name = "Unknown";
+        this.percentage = 0.0;
+    }
+    public Student(int rollno, String name, double percentage) {
+        this.rollno = rollno;
+        this.name = name;
+        this.percentage = percentage;
+    }
+    public void displayDetails() {
+        System.out.println("Roll No: " + this.rollno);
+        System.out.println("Name: " + this.name);
+        System.out.println("Percentage: " + this.percentage);
+        System.out.println("-----------------------");
+    }
+}
+public class StudentDetails {
+    public static void main(String[] args) {
+        Student[] students = new Student[5];
+        Scanner scanner = new Scanner(System.in);
+          for (int i = 0; i < 5; i++) {
+            System.out.println("Enter details for student " + (i + 1) + ":");
+            System.out.print("Enter Roll No: ");
+            int rollno = scanner.nextInt();
+            scanner.nextLine();  // Consume newline left-over
+            System.out.print("Enter Name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter Percentage: ");
+            double percentage = scanner.nextDouble();
+            students[i] = new Student(rollno, name, percentage);
+        }
+        System.out.println("\nDisplaying Student Details:");
+        for (int i = 0; i < 5; i++) {
+            students[i].displayDetails();
+        }
+        scanner.close();
+    }
+}
+*SLIP 8*
+Q1=
+public class ReverseNumber {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Error: Please provide a number as a command-line argument.");
+            return;
+        }
+        try {
+            int number = Integer.parseInt(args[0]);
+            int reversedNumber = 0;
+            while (number != 0) {
+                int digit = number % 10;     
+                reversedNumber = reversedNumber * 10 + digit;
+                number = number / 10;            
+            }
+            System.out.println("Reversed Number: " + reversedNumber);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Please enter a valid integer.");
+        }
+    }
+}
+Q2=(1)
+import java.util.Scanner;
+class InvalidDateException extends Exception {
+    public InvalidDateException(String message) {
+        super(message);
+    }
+}
+class MyDate {
+    private int day;
+    private int month;
+    private int year;
+    // Constructor to initialize date
+    public MyDate(int day, int month, int year) throws InvalidDateException {
+        if (!isValidDate(day, month, year)) {
+            throw new InvalidDateException("Invalid Date: " + day + "/" + month + "/" + year);
+        }
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+    public void displayDate() {
+        System.out.println("Date: " + day + "/" + month + "/" + year);
+    }
+    public boolean isValidDate(int day, int month, int year) {
+        if (month < 1 || month > 12) {
+            return false;
+        }
+        int[] daysInMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (isLeapYear(year)) {
+            daysInMonth[1] = 29;
+        }
+        return day > 0 && day <= daysInMonth[month - 1];
+    }
+    public boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+}
+public class DateTest {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Enter day: ");
+            int day = scanner.nextInt();
+            System.out.print("Enter month: ");
+            int month = scanner.nextInt();
+            System.out.print("Enter year: ");
+            int year = scanner.nextInt();
+            MyDate date = new MyDate(day, month, year);
+            date.displayDate();  // Display the valid date
+        } catch (InvalidDateException e) {
+            System.out.println(e.getMessage());
+        }
+        scanner.close();
+    }
+}
+*SLIP 9*
+Q1=
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+public class PerfectNumber {
+    public static void main(String[] args) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            // Accept the number from the user
+            System.out.print("Enter a number: ");
+            int number = Integer.parseInt(reader.readLine());
+
+            // Check if the number is perfect
+            if (isPerfect(number)) {
+                System.out.println(number + " is a perfect number.");
+            } else {
+                System.out.println(number + " is not a perfect number.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error in input: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid integer.");
+        }
+    }
+
+    public static boolean isPerfect(int num) {
+        int sum = 0;
+        for (int i = 1; i <= num / 2; i++) {
+            if (num % i == 0) {
+                sum += i;
+            }
+        }
+        return sum == num;
+    }
+}
+Q2=(1)
+class Point {
+    protected int x, y;
+          public Point() {
+        this.x = 0;
+        this.y = 0;
+    }
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public void display() {
+        System.out.println("Point (x, y): (" + x + ", " + y + ")");
+    }
+}
+class Point3D extends Point {
+    private int z;
+
+    // Default constructor
+    public Point3D() {
+        super();  // Calls the default constructor of Point
+        this.z = 0;
+    }
+    public Point3D(int x, int y, int z) {
+        super(x, y);  // Calls the parameterized constructor of Point
+        this.z = z;
+    }
+    @Override
+    public void display() {
+        System.out.println("Point3D (x, y, z): (" + x + ", " + y + ", " + z + ")");
+    }
+}
+public class TestPoint {
+    public static void main(String[] args) {
+        Point p1 = new Point();
+        p1.display();
+        Point p2 = new Point(5, 10);
+        p2.display();
+        Point3D p3 = new Point3D();
+        p3.display();
+        Point3D p4 = new Point3D(3, 4, 5);
+        p4.display();
+    }
+}
+*SLIP 10*
+Q1=
+import java.util.Scanner;
+public class PrimeCheck {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+        if (isPrime(number)) {
+            System.out.println(number + " is a prime number.");
+        } else {
+            System.out.println(number + " is not a prime number.");
+        }
+        scanner.close();
+    }
+    public static boolean isPrime(int num) {
+        if (num <= 1) {
+            return false; // 0 and 1 are not prime
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true; 
+    }
+}
+Q2=(2)
+class InsufficientFundException extends Exception {
+    public InsufficientFundException(String message) {
+        super(message);
+    }
+}
+class SavingAccount {
+    private String acno;  
+    private String name;  
+    private double balance;
+    public SavingAccount(String acno, String name, double initialBalance) {
+        this.acno = acno;
+        this.name = name;
+        this.balance = initialBalance;
+    }
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: " + amount);
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+     public void withdraw(double amount) throws InsufficientFundException {
+        if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive.");
+            return;
+        }
+        if (balance - amount < 500) {
+            throw new InsufficientFundException("Insufficient funds. Minimum balance of 500 required.");
+        }
+        balance -= amount;
+        System.out.println("Withdrawn: " + amount);
+    }
+    public void viewBalance() {
+        System.out.println("Current Balance: " + balance);
+    }
+}
+public class SavingAccountTest {
+    public static void main(String[] args) {
+        SavingAccount account = new SavingAccount("SA12345", "John Doe", 1000);
+        account.viewBalance();
+        account.deposit(500);
+        account.viewBalance();
+        try {
+            account.withdraw(800);
+            account.viewBalance();
+        } catch (InsufficientFundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            account.withdraw(200);
+            account.viewBalance();
+        } catch (InsufficientFundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+

@@ -1,0 +1,300 @@
+JAVA
+*SLIP 11*
+Q1=
+public class MyDate {
+      private int dd;
+    private int mm;
+    private int yy;
+    public MyDate(int dd, int mm, int yy) {
+        this.dd = dd;
+        this.mm = mm;
+        this.yy = yy;
+    }
+    public void displayDate() {
+        System.out.println("Date: " + this.dd + "-" + this.mm + "-" + this.yy);
+    }
+    public static void main(String[] args) {
+        MyDate date = new MyDate(21, 10, 2024);
+        date.displayDate();
+    }
+}
+Q2=(2)
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Scanner;
+public class CustomerDetails {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of customers: ");
+        int n = scanner.nextInt();
+        scanner.nextLine();
+        try {
+            FileOutputStream fos = new FileOutputStream("customers.dat");
+            DataOutputStream dos = new DataOutputStream(fos);
+           for (int i = 0; i < n; i++) {
+               System.out.println("Enter details for customer " + (i + 1) + ":");
+                System.out.print("Customer ID: ");
+                int c_id = scanner.nextInt();
+                scanner.nextLine();  // Consume the newline
+                System.out.print("Customer Name: ");
+                String cname = scanner.nextLine();
+                System.out.print("Address: ");
+                String address = scanner.nextLine();
+                System.out.print("Mobile Number: ");
+                String mobile_no = scanner.nextLine();
+                dos.writeInt(c_id);
+                dos.writeUTF(cname);
+                dos.writeUTF(address);
+                dos.writeUTF(mobile_no);
+            }
+            dos.close();
+            fos.close();
+            System.out.println("Customer details have been saved to 'customers.dat'");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            e.printStackTrace();
+        } finally {
+            scanner.close();
+        }
+    }
+}
+*SLIP 12*
+Q1=
+*FILE PAKAGE*
+package Series;
+public class SquareSeries {
+     public void printSquareSeries(int n) {
+        System.out.println("Square series for " + n + " terms:");
+        for (int i = 1; i <= n; i++) {
+            System.out.println(i + "^2 = " + (i * i));
+        }}}
+*MAIN PROG*
+import java.util.Scanner;
+import Series.SquareSeries;  
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of terms for the square series: ");
+        int n = scanner.nextInt();
+        SquareSeries series = new SquareSeries();
+        series.printSquareSeries(n);
+        scanner.close();
+    }
+}
+Q2=(1)
+abstract class Shape {
+    abstract double area();
+    abstract double volume();
+}
+class Cylinder extends Shape {
+    private double radius;
+    private double height;
+    public Cylinder(double radius, double height) {
+        this.radius = radius;
+        this.height = height;
+    }
+    @Override
+    public double area() {
+        return 2 * Math.PI * radius * (height + radius);
+    }
+    @Override
+    public double volume() {
+        return Math.PI * radius * radius * height;
+    }
+    public void display() {
+        System.out.println("Cylinder Radius: " + radius);
+        System.out.println("Cylinder Height: " + height);
+        System.out.println("Surface Area: " + area());
+        System.out.println("Volume: " + volume());
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Cylinder cylinder = new Cylinder(5.0, 10.0);
+        cylinder.display();
+    }
+}
+*SLIP 13*
+Q1=
+import java.util.LinkedList;
+import java.util.Iterator;
+public class FruitList {
+    public static void main(String[] args) {
+        LinkedList<String> fruitList = new LinkedList<>();
+        fruitList.add("Apple");
+        fruitList.add("Banana");
+        fruitList.add("Guava");
+        fruitList.add("Orange");
+        Iterator<String> iterator = fruitList.iterator();
+        System.out.println("Fruits in the Linked List:");
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+}
+Q2=
+class AgeNotWithinRangeException extends Exception {
+    public AgeNotWithinRangeException(String message) {
+        super(message);
+    }
+}
+class Student {
+    private int rollNo;
+    private String name;
+    private int age;
+    private String course;
+    public Student(int rollNo, String name, int age, String course) throws AgeNotWithinRangeException {
+        if (age < 15 || age > 21) {
+            throw new AgeNotWithinRangeException("Age Not Within The Range (15 - 21)");
+        }
+        this.rollNo = rollNo;
+        this.name = name;
+        this.age = age;
+        this.course = course;
+    }
+    public void display() {
+        System.out.println("Student Details:");
+        System.out.println("Roll No: " + rollNo);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Course: " + course);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        try {
+            Student student1 = new Student(101, "John", 18, "Computer Science");
+            student1.display();
+            Student student2 = new Student(102, "Alice", 22, "Mechanical Engineering");
+            student2.display();
+        } catch (AgeNotWithinRangeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+*SLIP 14*
+Q1=
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+public class JDBCConnectionExample {
+    public static void main(String[] args) {
+           String url = "jdbc:mysql://localhost:3306/your_database_name";  // Change the database name
+        String username = "your_username";  // Change the username
+        String password = "your_password";  // Change the password
+        Connection connection = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");          
+               System.out.println("Connecting to the database...");
+            connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Successfully connected to the database!");
+        } catch (ClassNotFoundException e) {
+                    System.out.println("JDBC Driver not found!");
+            e.printStackTrace();
+        } catch (SQLException e) {
+                    System.out.println("Failed to connect to the database!");
+            e.printStackTrace();
+        } finally {
+                   if (connection != null) {
+                try {
+                    connection.close();
+                    System.out.println("Database connection closed.");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+
+Q2=(2)
+class RollNoNotWithinRangeException extends Exception {
+    public RollNoNotWithinRangeException(String message) {
+        super(message);
+    }
+}
+class Student {
+    private int rollNo;
+    private String name;
+    private int age;
+    private String course;
+    public Student(int rollNo, String name, int age, String course) throws RollNoNotWithinRangeException {
+        if (rollNo < 13001 || rollNo > 13080) {
+            throw new RollNoNotWithinRangeException("Roll No is Not Within The Range (13001 - 13080)");
+        }
+        this.rollNo = rollNo;
+        this.name = name;
+        this.age = age;
+        this.course = course;
+    }
+    public void display() {
+        System.out.println("Student Details:");
+        System.out.println("Roll No: " + rollNo);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Course: " + course);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        try {
+            Student student1 = new Student(13010, "John Doe", 20, "Computer Science");
+            student1.display();
+            Student student2 = new Student(13090, "Alice Smith", 21, "Mechanical Engineering");
+            student2.display();
+        } catch (RollNoNotWithinRangeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+*SLIP 15*
+Q1=
+import java.util.LinkedList;
+import java.util.ListIterator;
+public class FruitLinkedList {
+    public static void main(String[] args) {
+        LinkedList<String> fruitList = new LinkedList<>();
+        fruitList.add("Apple");
+        fruitList.add("Banana");
+        fruitList.add("Guava");
+        fruitList.add("Orange");
+        System.out.println("Fruits in Reverse Order:");
+        ListIterator<String> iterator = fruitList.listIterator(fruitList.size());
+        while (iterator.hasPrevious()) {
+            System.out.println(iterator.previous());
+        }
+    }
+}
+Q2=(1)
+class Employee {
+    protected String name;
+    protected double salary;
+    public Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+    public void displayEmployeeDetails() {
+        System.out.println("Employee Name: " + name);
+        System.out.println("Salary: " + salary);
+    }
+}
+class Developer extends Employee {
+    private String projectName;
+    public Developer(String name, double salary, String projectName) {
+        super(name, salary); // Call the superclass constructor
+        this.projectName = projectName;
+    }
+    public void displayDeveloperDetails() {
+       displayEmployeeDetails();
+        System.out.println("Project Name: " + projectName);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Developer developer = new Developer("Alice Johnson", 75000, "Project Phoenix");
+        System.out.println("Developer Details:");
+        developer.displayDeveloperDetails();
+    }
+}
+
